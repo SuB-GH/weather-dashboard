@@ -1,43 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- link APIs and other files here -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/style.css"/>
     <title>Weather Dashboard</title>
-    
+
 </head>
+
 <body>
-        <header>Weather Dashboard</header>
-        <main>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
 
-            <div class="col-12 col-md-4">
-                <div class="card">
-                  <h3 class="card-header text-uppercase">Search for a City:</h3>
-                  <form id="user-form" class="card-body">
-                    <label class="form-label" for="username">Username</label>
+    <main class="flex-row justify-space-between">
+        <div class="container">
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <h3 class="card-header text-uppercase">Search for a City:</h3>
+                <form id="user-form" class="card-body">
                     <input name="username" id="username" type="text" autofocus="true" class="form-input" />
-                    <button type="submit" class="btn">Get User</button>
-                  </form>
-                </div>
-          
-              </div>
-
-            <div>
-
-            </div>
-            <div>
-
+                    <button type="submit" class="btn">Search</button>
+                </form>
             </div>
 
-            <div>
-                
-            </div>
+        </div>
+
+        <div class="col-12 col-md-8">
+
+            <h2 class="subtitle">current city weather will go here<span id="repo-search-term"></span></h2>
+            <div id="repos-container" class="list-group"></div>
+      
+          </div>
 
 
-        </main>
-        <script src="./assets/js/script.js"></script>
+        <div>
+            <!-- this will contain cards containing 5-day forecast-->
+        </div>
+
+    </div>
+    </main>
+    <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
