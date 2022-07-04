@@ -17,101 +17,102 @@
         <h1>Weather Dashboard</h1>
     </header>
 
-    <main class="flex-row justify-space-between">
-        <div class="container">
-            <div class="col-12 col-md-4">
+    <main class="justify-space-between">
+        <div class="container-top d-flex justify-content-start">
+            <div class="col-md-4">
                 <div class="card">
                     <h3 class="card-header text-uppercase">Search for a City:</h3>
                     <form id="user-form" class="card-body">
-                        <input name="username" id="username" type="text" autofocus="true" class="form-input" />
+                        <label class="form-label" for="city">City</label>
+          <input name="city" id="city" type="text" autofocus="true" class="form-input" />
                         <button type="submit" class="btn btn-primary" id="fetch-button">Search</button>
-
-                        
                     </form>
                 </div>
+            </div>
 
+            <div class="container-current d-flex justify-content-end">
+                <div class="col-md-8">
+                    <h2 class="subtitle">current city weather will go here<span id="repo-search-term"></span></h2>
+                    <div id="input-container" class="list-group"></div>
+                </div>
             </div>
         </div>
 
-        <div class="container">
-            <div class="col-12 col-md-8">
 
-                <h2 class="subtitle">current city weather will go here<span id="repo-search-term"></span></h2>
-                <div id="repos-container" class="list-group"></div>
-
-            </div>
-
-            <div class="daily-forecast">
-                <div class="col-12 col-md-6 col-xl-3 mb-3">
-                    <div class="card">
-                        <h4 class="card-header bg-dark text-light">
-                            Weather Forecast Day 1
-                        </h4>
-                        <ul id="list-toDo" class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <span class="badge badge-primary badge-pill"></span>
-                                <p class="m-1"></p>
-                            </li>
-                        </ul>
+            <div class="daily-forecast d-flex justify-content-end">
+                
+                    <div class="col-md-2 mb-3">
+                        <div class="card">
+                            <h4 class="card-header bg-dark text-light">
+                                Weather Forecast Day 1
+                            </h4>
+                            <ul id="list-toDo" class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <span class="badge badge-primary badge-pill"></span>
+                                    <p class="m-1"></p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="col-12 col-md-6 col-xl-3 mb-3">
-                    <div class="card">
-                        <h4 class="card-header bg-dark text-light">
-                            Weather Forecast Day 2
-                        </h4>
-                        <ul id="list-toDo" class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <span class="badge badge-primary badge-pill"></span>
-                                <p class="m-1"></p>
-                            </li>
-                        </ul>
+                    <div class="col-md-2 mb-3">
+                        <div class="card">
+                            <h4 class="card-header bg-dark text-light">
+                                Weather Forecast Day 2
+                            </h4>
+                            <ul id="list-toDo" class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <span class="badge badge-primary badge-pill"></span>
+                                    <p class="m-1"></p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-12 col-md-6 col-xl-3 mb-3">
-                    <div class="card">
-                        <h4 class="card-header bg-dark text-light">
-                            Weather Forecast Day 3
-                        </h4>
-                        <ul id="list-toDo" class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <span class="badge badge-primary badge-pill"></span>
-                                <p class="m-1"></p>
-                            </li>
-                        </ul>
+                    <div class="col-md-2 mb-3">
+                        <div class="card">
+                            <h4 class="card-header bg-dark text-light">
+                                Weather Forecast Day 3
+                            </h4>
+                            <ul id="list-toDo" class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <span class="badge badge-primary badge-pill"></span>
+                                    <p class="m-1"></p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-12 col-md-6 col-xl-3 mb-3">
-                    <div class="card">
-                        <h4 class="card-header bg-dark text-light">
-                            Weather Forecast Day 4
-                        </h4>
-                        <ul id="list-toDo" class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <span class="badge badge-primary badge-pill"></span>
-                                <p class="m-1"></p>
-                            </li>
-                        </ul>
+                    <div class="col-md-2 mb-3">
+                        <div class="card">
+                            <h4 class="card-header bg-dark text-light">
+                                Weather Forecast Day 4
+                            </h4>
+                            <ul id="list-toDo" class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <span class="badge badge-primary badge-pill"></span>
+                                    <p class="m-1"></p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-12 col-md-6 col-xl-3 mb-3">
-                    <div class="card">
-                        <h4 class="card-header bg-dark text-light">
-                            Weather Forecast Day 5
-                        </h4>
-                        <ul id="list-toDo" class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <span class="badge badge-primary badge-pill"></span>
-                                <p class="m-1"></p>
-                            </li>
-                        </ul>
+                    <div class="col-md-2 mb-3">
+                        <div class="card">
+                            <h4 class="card-header bg-dark text-light">
+                                Weather Forecast Day 5
+                            </h4>
+                            <ul id="list-toDo" class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <span class="badge badge-primary badge-pill"></span>
+                                    <p class="m-1"></p>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
-                </div>
+               
             </div>
         </div>
         </div>
