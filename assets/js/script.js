@@ -16,68 +16,76 @@ var formSubmitHandler = function (event) {
     event.preventDefault();
     getWeather();
 }
-console.log(formSubmitHandler);
+//console.log(formSubmitHandler);
 
 var getWeather = function () {
+    //get user/city input for weather forecast
+    var requestUrl = function (Lat, Lon) {
+        var requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=3e89c17611e41ba25f1b674bd5f9012d";
 
-    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInputEl + "&units=imperial&appid=" + apiKey;
-    
-    fetch(requestUrl).then(function (response) {
-        // request was successful
-        if (response.ok) {
-            response.json().then(function (data) {
-                // pass response data to dom function
-                console.log(data);
-            });
-        } else {
-            alert("There was a problem with your request!");
-        }
-    })
+        //"https://api.openweathermap.org/data/2.5/weather?q=" + cityInputEl + "&units=imperial&appid=" + apiKey;
+
+        fetch(requestUrl).then(function (response) {
+            // request was successful
+            if (response.ok) {
+                response.json().then(function (data) {
+                    // pass response data to dom function
+                    console.log(data);
+                });
+            }
+            // else {
+            //     alert("There was a problem with your request!");
+            // }
+        });
+    };
     getWeather();
 
+
+    console.log(getWeather);
+
+
+
+    //get lat & Lon from city input
+    var cityInput = function (city) {
+
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=6&appid=3e89c17611e41ba25f1b674bd5f9012d";
     
-    console.log(getWeather);
+    'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&appID=' + '3e89c17611e41ba25f1b674bd5f9012d';
+    console.log(test);
+   fetch(apiUrl);
 
-
-
-
-    let apiUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&appID=' + '3e89c17611e41ba25f1b674bd5f9012d';
-    console.log(getWeather);
-    console.dir(cityID);
-    fetch(apiUrl);
-
-    var displayinputs = function (inputs, searchTerm) {
-        // check if api returned any inputs
-        if (inputs.length === 0) {
-            inputContainerEl.textContent = "No repositories found.";
-            return;
+    // var displayinputs = function (inputs, searchTerm) {
+    //     // check if api returned any inputs
+    //     if (inputs.length === 0) {
+    //         inputContainerEl.textContent = "No repositories found.";
+    //         return;
         }
         fetch(apiUrl).then(function (response) {
             // request was successful
             if (response.ok) {
                 response.json().then(function (data) {
                     // pass response data to dom function
-                    displayIssues(data);
+                    console.log(data);
+
+
                 });
-            } else {
-                alert("There was a problem with your request!");
-            }
+            // } else {
+            //     alert("There was a problem with your request!");
+            // }
         }
-            .catch(function (error) {
-                // Notice this `.catch()` getting chained onto the end of the `.then()` method
-                alert("Unable to connect to GitHub");
-            }));
-        if (response.ok) {
-            response.json().then(function (data) {
-                displayIssues(data);
+            // .catch(function (error) {
+            //     // Notice this `.catch()` getting chained onto the end of the `.then()` method
+            //     alert("Unable to connect to GitHub");
+            // }));
+        // if (response.ok) {
+        //     response.json().then(function (data) {
+        //         displayIssues(data);
 
-                // check if api has paginated issues
-                if (response.headers.get("Link")) {
-                    console.log("displayWarning(cityID)");
-                }
-            });
-        }
-    }
-}
-
-
+        //         // check if api has paginated issues
+        //         if (response.headers.get("Link")) {
+        //             console.log("displayWarning(cityID)");
+        //         }
+        //     });
+        // }
+        
+        
