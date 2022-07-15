@@ -1,91 +1,80 @@
 var inputForm = document.querySelector("#input-form");
-var dailyForecast = document.querySelector('ul'); // sample from activity 6
-var fetchButton = document.getElementById('fetch-button');
+var dailyForecast = document.querySelector("ul"); // sample from activity 6
+var fetchButton = document.getElementById("fetch-button");
 var inputContainerEl = document.querySelector("#input-container");
+var hourlyWeatherEl = document.querySelector(".hourly-weather");
 var cityInputEl = document.querySelector("#city");
 var apiKey = "3e89c17611e41ba25f1b674bd5f9012d";
+var currentForecast;
 
-localStorage.setItem("test1", "test2");
-let val = localStorage.getItem("test1")
-//console.log(val);
 
-inputForm.addEventListener("submit", formSubmitHandler);
 
-var formSubmitHandler = function (event) {
-    // prevent page from refreshing
+localStorage.setItem("city", "data");
+let val = localStorage.getItem("city")
+console.log(val);
+
+inputForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    getWeather();
+    formSubmitHandler();
+});
+
+var formSubmitHandler = function () {
+    // prevent page from refreshing
+    //console.log(event);
+    cityInput(cityInputEl.value);
 }
-//console.log(formSubmitHandler);
-
-var getWeather = function () {
-    //get user/city input for weather forecast
-    var requestUrl = function (Lat, Lon) {
-        var requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=3e89c17611e41ba25f1b674bd5f9012d";
-
-        //"https://api.openweathermap.org/data/2.5/weather?q=" + cityInputEl + "&units=imperial&appid=" + apiKey;
-
-        fetch(requestUrl).then(function (response) {
-            // request was successful
-            if (response.ok) {
-                response.json().then(function (data) {
-                    // pass response data to dom function
-                    console.log(data);
-                });
-            }
-            // else {
-            //     alert("There was a problem with your request!");
-            // }
-        });
-    };
-    getWeather();
+console.log(inputForm);
 
 
-    console.log(getWeather);
+var getForecastData = function (lat, lon) {
+    var requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=3e89c17611e41ba25f1b674bd5f9012d";
 
+    fetch(requestUrl).then(function (response) {
+        // request was successful
+        if (response.ok) {
+            response.json().then(function (data) {
+                // pass response data to dom function
+                console.log(data);
 
-
-    //get lat & Lon from city input
-    var cityInput = function (city) {
-
-    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=6&appid=3e89c17611e41ba25f1b674bd5f9012d";
-    
-    'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&appID=' + '3e89c17611e41ba25f1b674bd5f9012d';
-    console.log(test);
-   fetch(apiUrl);
-
-    // var displayinputs = function (inputs, searchTerm) {
-    //     // check if api returned any inputs
-    //     if (inputs.length === 0) {
-    //         inputContainerEl.textContent = "No repositories found.";
-    //         return;
+            });
         }
-        fetch(apiUrl).then(function (response) {
-            // request was successful
-            if (response.ok) {
-                response.json().then(function (data) {
-                    // pass response data to dom function
-                    console.log(data);
+    });
+};
 
 
-                });
-            // } else {
-            //     alert("There was a problem with your request!");
-            // }
+
+//get lat & Lon from city input
+var cityInput = function (city) {
+
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=5&appid=3e89c17611e41ba25f1b674bd5f9012d";
+
+    console.log(apiUrl);
+    fetch(apiUrl).then(function (response) {
+        // request was successful
+        if (response.ok) {
+            response.json().then(function (data) {
+                // pass response data to dom function
+                console.log(data);
+
+                lat = data[0].lat;
+                lon = data[0].lon;
+                getForecastData(lat, lon, city);
+
+
+            });
         }
-            // .catch(function (error) {
-            //     // Notice this `.catch()` getting chained onto the end of the `.then()` method
-            //     alert("Unable to connect to GitHub");
-            // }));
-        // if (response.ok) {
-        //     response.json().then(function (data) {
-        //         displayIssues(data);
+    })
+}
 
-        //         // check if api has paginated issues
-        //         if (response.headers.get("Link")) {
-        //             console.log("displayWarning(cityID)");
-        //         }
-        //     });
-        // }
-        
-        
+currentForecast = city.current
+//current city
+var currentCity = document.createElement(city.daily.value)
+currentCity.textContent = city;
+hourlyWeatherEl.appendChild(currentCity);
+
+var currentHumidity = data.current[0].humidity;
+var currentHumidityEl = document.createElement("p");
+currentHumidityEl.textContent = "Humidity: " + currentHumidity + "%";
+hourlyWeatherEl.appendChild(currentHumidityEl);
+
+
