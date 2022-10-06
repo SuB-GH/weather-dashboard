@@ -50,17 +50,22 @@ var getForecastData = function (lat, lon) {
 
 var fiveDayForecast = function (data) {
     let fiveDayDisplay = document.createElement('div');
-    fiveDayDisplay.setAttribute('id', data);
+    fiveDayDisplay.setAttribute('id', data); //keep data, but is id the correct variable?
     //display.appendChild(fiveDayDisplay);
     console.log(data); // "data" is the weather data for the city that was input
 
     if (data.length === 0) {
         fiveDayContainerEl.textContent = "Test";
         return;
+       
     }
-
+    console.log("Test");
+    //loop over "data"
     for (var i = 0; i < data.length; i++) {
-        // create a link element to take users to the issue on github
+        var dataVar = data[i].owner.login + "/" + data[i].name;
+
+        fiveDayContainerEl.textContent = dataVar
+
         var fiveDayEl = document.createElement("a");
         fiveDayEl.classList = "list-item flex-row justify-space-between align-center";
         fiveDayEl.setAttribute("href", data[i].html_url);
