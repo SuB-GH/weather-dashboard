@@ -4,6 +4,7 @@ var inputForm = document.querySelector("#input-form"); // input form that accept
 var dailyForecast = document.querySelector("daily-forecast"); // sample from activity 6
 var fetchButton = document.getElementById("fetch-button");
 var inputContainerEl = document.querySelector("#input-container");
+var humidityContainerEl = document.querySelector("#humidity-container");
 var hourlyWeatherEl = document.querySelector(".hourly-weather");
 var cityInputEl = document.querySelector("#city"); // references input form that accepts a city selected by the user
 var apiKey = "3e89c17611e41ba25f1b674bd5f9012d";
@@ -11,11 +12,10 @@ var currentForecast;
 
 function formSubmitHandler(event) {
     event.preventDefault();
-    console.log(cityInputEl.value);
+    console.log(cityInputEl.value); // "cityInputEl" is the city that was entered by the user
     var cityName = cityInputEl.value.trim();
     if (cityName) {
         cityInput(cityName);
-
         inputContainerEl.textContent = '';
         cityInputEl.value = '';
     }
@@ -37,14 +37,10 @@ var cityInput = function (city) {
                 lat = data[0].lat;
                 lon = data[0].lon;
                 getForecastData(lat, lon, city);
-
-
             });
         }
     })
 }
-
-
 
 var getForecastData = function (lat, lon) {
     var requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=3e89c17611e41ba25f1b674bd5f9012d";
@@ -63,14 +59,31 @@ var getForecastData = function (lat, lon) {
 };
 
 var fiveDayForecast = function (data) {
+    console.log(data);
     console.log(data.current.temp);
     if (data.length === 0) {
         fiveDayContainerEl.textContent = "Test";
         return;
     }
-    var currentTemp = data.current.temp;
-    var weatherTitle = document.getElementById("subtitle");
+
+    var humidityEl = document.createElement('p');
+
+    var currentTemp = data.current.temp; // this grabs the actual current temp for the selected city
+    var currentWind = data.current.wind_speed; // this grabs the actual current wind speed for the selected city
+    var currentHumidity = data.current.humidity; // this grabs the actual current humidity for the selected city
+
+    var weatherTitle = document.getElementById("input-container");
+    humidityEl = document.getElementById('humidity-container');
+    windEl = document.getElementById('p');
+
     weatherTitle.textContent = `temperature: ${currentTemp}`;
+    //windEl.textContent = `wind: ${currentWind}`;
+    humidityEl.textContent = `humidity: ${currentHumidity}`;
+    console.log(currentTemp);
+    console.log(currentWind);
+    console.log(currentHumidity);
+
+
 
     for (var i = 0; i < data.length; i++) {
         var dataVar = data[i].owner.login + "/" + data[i].name;
