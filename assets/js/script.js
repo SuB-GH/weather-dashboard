@@ -1,10 +1,11 @@
 // look at 6.3.5: Convert Fetched Data into DOM Elements to grab city data and put it in the html
-
+var origText = document.querySelector("#city-text");
 var inputForm = document.querySelector("#input-form"); // input form that accepts a city selected by the user
 var dailyForecast = document.querySelector("daily-forecast"); // sample from activity 6
 var fetchButton = document.getElementById("fetch-button");
 var inputContainerEl = document.querySelector("#input-container");
 var humidityContainerEl = document.querySelector("#humidity-container");
+var windContainerEl = document.querySelector("#wind-container");
 var hourlyWeatherEl = document.querySelector(".hourly-weather");
 var cityInputEl = document.querySelector("#city"); // references input form that accepts a city selected by the user
 var apiKey = "3e89c17611e41ba25f1b674bd5f9012d";
@@ -17,9 +18,13 @@ function formSubmitHandler(event) {
     if (cityName) {
         cityInput(cityName);
         inputContainerEl.textContent = '';
-        cityInputEl.value = '';
+        //cityInputEl.value = '';
+        origText.innerHTML = cityInputEl.value; 
+       
     }
 }
+
+
 
 //get lat & Lon from city input
 var cityInput = function (city) {
@@ -74,16 +79,25 @@ var fiveDayForecast = function (data) {
 
     var weatherTitle = document.getElementById("input-container");
     humidityEl = document.getElementById('humidity-container');
-    windEl = document.getElementById('p');
+    windEl = document.getElementById('wind-container');
 
-    weatherTitle.textContent = `temperature: ${currentTemp}`;
-    //windEl.textContent = `wind: ${currentWind}`;
-    humidityEl.textContent = `humidity: ${currentHumidity}`;
+    // this is what renders the current weather data in the html page
+    weatherTitle.textContent = `Temperature: ${currentTemp}`;
+    windEl.textContent = `Wind Speed: ${currentWind}`;
+    humidityEl.textContent = `Humidity: ${currentHumidity}` + '%';
+
+    // currentHumidityEl.textContent = "Humidity: " + currentHumidity + "%";
+
+    // var iconUrl = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
+    // var iconDescription = current.weather[0].description || weather[0].main;
+
+ 
     console.log(currentTemp);
     console.log(currentWind);
     console.log(currentHumidity);
 
-
+    // weatherIcon.setAttribute('src', iconUrl);
+    //  weatherIcon.setAttribute('alt', iconDescription);
 
     for (var i = 0; i < data.length; i++) {
         var dataVar = data[i].owner.login + "/" + data[i].name;
