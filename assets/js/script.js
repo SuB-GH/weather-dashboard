@@ -1,3 +1,4 @@
+//const dayjs = require('dayjs');
 // look at 6.3.5: Convert Fetched Data into DOM Elements to grab city data and put it in the html
 var origText = document.querySelector("#city-text");
 var inputForm = document.querySelector("#input-form"); // input form that accepts a city selected by the user
@@ -18,6 +19,7 @@ var citySearchHistory = JSON.parse(localStorage.getItem("city")) || [];
 function renderCitySearchHistory() {
     citySearchHistoryCont.innerHTML = '';
 
+    // this creates the city search history buttons and renders them to the html page
     for (var i = citySearchHistory.length - 1; i >= 0; i--) {
         var btn = document.createElement('button');
         btn.setAttribute('type', 'button');
@@ -42,6 +44,9 @@ function formSubmitHandler(event) {
         citySearchHistory.push(cityInputEl.value);
         localStorage.setItem('city', JSON.stringify(citySearchHistory));
         renderCitySearchHistory();
+        // only add city button if city is not there already
+        // if (city.indexOf(citySearchHistory) !== -1) {
+        //     return;
         console.log(city);
     }
 }
@@ -109,8 +114,11 @@ var fiveDayForecast = function (data) {
 
     // currentHumidityEl.textContent = "Humidity: " + currentHumidity + "%";
 
-    // var iconUrl = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
-    // var iconDescription = current.weather[0].description || weather[0].main;
+    //var iconUrl = `https://openweathermap.org/img/w/${data.daily[0].icon}.png`;
+    var iconUrl = `https://openweathermap.org/img/w/${daily.weather[0].icon}.png`;
+    //http://openweathermap.org/img/wn/10d@2x.png
+    var dailyIcon = daily.weather[0].description || daily[0].main;
+    console.log(iconUrl);
 
 
     console.log(currentTemp);
@@ -129,16 +137,20 @@ var fiveDayForecast = function (data) {
         var dailyTemp = data.daily[i].temp.day; // this grabs the actual current temp for the selected city
         var dailyWind = data.daily[i].wind_speed; // this grabs the actual current wind speed for the selected city
         var dailyHumidity = data.daily[i].humidity; // this grabs the actual current humidity for the selected city
-        //var test = data.daily.humidity;
+        //var dailyIcon = data.daily[i].icon;
     
         var weatherTitle = document.getElementById("temperature-container-" + i);
         humidityEl = document.getElementById("humidity-container-" + i);
         windEl = document.getElementById("wind-container-" + i);
+        //iconEl = document.getElementById("icon-container");
     
         // this is what renders the current weather data in the html page
         weatherTitle.textContent = `Temperature: ${dailyTemp}`;
         windEl.textContent = `Wind Speed: ${dailyWind}`;
         humidityEl.textContent = `Humidity: ${dailyHumidity}` + '%';
+        //iconEl.setAttribute('src', dailyIcon);
+
+
 
 
     //     var fiveDayEl = document.createElement("a");
