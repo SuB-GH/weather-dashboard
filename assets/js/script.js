@@ -137,20 +137,18 @@ var fiveDayForecast = function (data) {
         var dailyTemp = data.daily[i].temp.day; // this grabs the actual current temp for the selected city
         var dailyWind = data.daily[i].wind_speed; // this grabs the actual current wind speed for the selected city
         var dailyHumidity = data.daily[i].humidity; // this grabs the actual current humidity for the selected city
-        //var dailyIcon = data.daily[i].icon;
+        var iconEl = data.current.weather[0].icon;
     
         var weatherTitle = document.getElementById("temperature-container-" + i);
         humidityEl = document.getElementById("humidity-container-" + i);
         windEl = document.getElementById("wind-container-" + i);
-        //iconEl = document.getElementById("icon-container");
+        iconEl = document.getElementById("icon-container");
     
         // this is what renders the current weather data in the html page
         weatherTitle.textContent = `Temperature: ${dailyTemp}`;
         windEl.textContent = `Wind Speed: ${dailyWind}`;
         humidityEl.textContent = `Humidity: ${dailyHumidity}` + '%';
-        //iconEl.setAttribute('src', dailyIcon);
-
-
+        iconEl.setAttribute('src', iconUrl);
 
 
     //     var fiveDayEl = document.createElement("a");
