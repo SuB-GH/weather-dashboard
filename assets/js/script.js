@@ -115,9 +115,9 @@ var fiveDayForecast = function (data) {
     // currentHumidityEl.textContent = "Humidity: " + currentHumidity + "%";
 
     //var iconUrl = `https://openweathermap.org/img/w/${data.daily[0].icon}.png`;
-    var iconUrl = `https://openweathermap.org/img/w/${daily.weather[0].icon}.png`;
+    var iconUrl = `https://openweathermap.org/img/w/${data.current.weather[0].icon}.png`;
     //http://openweathermap.org/img/wn/10d@2x.png
-    var dailyIcon = daily.weather[0].description || daily[0].main;
+    //var dailyIcon = daily.weather[0].description || daily[0].main;
     console.log(iconUrl);
 
 
