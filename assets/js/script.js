@@ -8,8 +8,27 @@ var humidityContainerEl = document.querySelector("#humidity-container");
 var windContainerEl = document.querySelector("#wind-container");
 var hourlyWeatherEl = document.querySelector(".hourly-weather");
 var cityInputEl = document.querySelector("#city"); // references input form that accepts a city selected by the user
+var citySearchHistoryCont = document.querySelector("#search-history");
+
+
 var apiKey = "3e89c17611e41ba25f1b674bd5f9012d";
 var currentForecast;
+var citySearchHistory = JSON.parse(localStorage.getItem("city")) || [];
+
+function renderCitySearchHistory() {
+    citySearchHistoryCont.innerHTML = '';
+
+    for (var i = citySearchHistory.length - 1; i >= 0; i--) {
+        var btn = document.createElement('button');
+        btn.setAttribute('type', 'button');
+        btn.setAttribute('aria-controls', 'current forecast');
+        btn.classList.add('history-btn', 'btn-history');
+
+        btn.setAttribute('data-search', citySearchHistory[i]);
+        btn.textContent = citySearchHistory[i];
+        citySearchHistoryCont.appendChild(btn);
+    }
+}
 
 function formSubmitHandler(event) {
     event.preventDefault();
@@ -19,12 +38,13 @@ function formSubmitHandler(event) {
         cityInput(cityName);
         inputContainerEl.textContent = '';
         //cityInputEl.value = '';
-        origText.innerHTML = cityInputEl.value; 
-       
+        origText.innerHTML = cityInputEl.value; // this adds the city to the rendered weather data
+        citySearchHistory.push(cityInputEl.value);
+        localStorage.setItem('city', JSON.stringify(citySearchHistory));
+        renderCitySearchHistory();
+        console.log(city);
     }
 }
-
-
 
 //get lat & Lon from city input
 var cityInput = function (city) {
@@ -64,7 +84,7 @@ var getForecastData = function (lat, lon) {
 };
 
 var fiveDayForecast = function (data) {
-    console.log(data);
+    console.log(data); //five day forecast
     console.log(data.current.temp);
     if (data.length === 0) {
         fiveDayContainerEl.textContent = "Test";
@@ -76,6 +96,7 @@ var fiveDayForecast = function (data) {
     var currentTemp = data.current.temp; // this grabs the actual current temp for the selected city
     var currentWind = data.current.wind_speed; // this grabs the actual current wind speed for the selected city
     var currentHumidity = data.current.humidity; // this grabs the actual current humidity for the selected city
+    var test = data.daily.humidity;
 
     var weatherTitle = document.getElementById("input-container");
     humidityEl = document.getElementById('humidity-container');
@@ -91,7 +112,7 @@ var fiveDayForecast = function (data) {
     // var iconUrl = `https://openweathermap.org/img/w/${current.weather[0].icon}.png`;
     // var iconDescription = current.weather[0].description || weather[0].main;
 
- 
+
     console.log(currentTemp);
     console.log(currentWind);
     console.log(currentHumidity);
@@ -99,38 +120,54 @@ var fiveDayForecast = function (data) {
     // weatherIcon.setAttribute('src', iconUrl);
     //  weatherIcon.setAttribute('alt', iconDescription);
 
-    for (var i = 0; i < data.length; i++) {
-        var dataVar = data[i].owner.login + "/" + data[i].name;
+    for (var i = 0; i < 5; i++) {
+        // var dataVar = data.daily[i].humidity + "/" + data.daily[i].humidity;
+        // console.log(dataVar);
 
-        fiveDayContainerEl.textContent = dataVar
+        // fiveDayContainerEl.textContent = dataVar
 
-        var fiveDayEl = document.createElement("a");
-        fiveDayEl.classList = "list-item flex-row justify-space-between align-center";
-        fiveDayEl.setAttribute("href", data[i].html_url);
-        fiveDayEl.setAttribute("target", "_blank");
-        console.log(dataVar);
+        var dailyTemp = data.daily[i].temp.day; // this grabs the actual current temp for the selected city
+        var dailyWind = data.daily[i].wind_speed; // this grabs the actual current wind speed for the selected city
+        var dailyHumidity = data.daily[i].humidity; // this grabs the actual current humidity for the selected city
+        //var test = data.daily.humidity;
+    
+        var weatherTitle = document.getElementById("temperature-container-" + i);
+        humidityEl = document.getElementById("humidity-container-" + i);
+        windEl = document.getElementById("wind-container-" + i);
+    
+        // this is what renders the current weather data in the html page
+        weatherTitle.textContent = `Temperature: ${dailyTemp}`;
+        windEl.textContent = `Wind Speed: ${dailyWind}`;
+        humidityEl.textContent = `Humidity: ${dailyHumidity}` + '%';
 
-        // create span to hold issue title
-        var titleEl = document.createElement("span");
-        titleEl.textContent = data[i].title;
 
-        // append to container
-        fiveDayEl.appendChild(titleEl);
+    //     var fiveDayEl = document.createElement("a");
+    //     fiveDayEl.classList = "list-item flex-row justify-space-between align-center";
+    //     fiveDayEl.setAttribute("href", data.daily[i].html_url);
+    //     fiveDayEl.setAttribute("target", "_blank");
+    //     //console.log(dataVar);
 
-        // create a type element
-        var typeEl = document.createElement("span");
+    //     // create span to hold issue title
+    //     var titleEl = document.createElement("span");
+    //     titleEl.textContent = data.daily[i].uvi;
 
-        // check if issue is an actual issue or a pull request
-        if (data[i].pull_request) {
-            typeEl.textContent = "(Pull request)";
-        } else {
-            typeEl.textContent = "(fiveDay)";
-        }
+    //     // append to container
+    //     fiveDayEl.appendChild(titleEl);
 
-        // append to container
-        fiveDayEl.appendChild(typeEl);
-        fiveDayContainerEl.appendChild(fiveDayEl);
-    }
+    //     // create a type element
+    //     var typeEl = document.createElement("span");
+
+    //     // check if issue is an actual issue or a pull request
+    //     // if (data.daily[i].pull_request) {
+    //     //     typeEl.textContent = "(Pull request)";
+    //     // } else {
+    //     //     typeEl.textContent = "(fiveDay)";
+    //     // }
+
+    //     // append to container
+    //     fiveDayEl.appendChild(typeEl);
+    //     //fiveDayContainerEl.appendChild(fiveDayEl);
+    // }
 
 };
 
@@ -147,12 +184,6 @@ var testEl = document.createElement("span");
 // currentCity.textContent = currentCity;
 // hourlyWeatherEl.appendChild(currentCity);
 
-// var currentHumidity = data.current[0].humidity;
-// var currentHumidityEl = document.createElement("h3");
-// currentHumidityEl.textContent = "Humidity: " + currentHumidity + "%";
-// hourlyWeatherEl.appendChild(currentHumidityEl);
-
-
 
 let main = document.querySelector(".main");
 let p = main.querySelector("p");
@@ -160,7 +191,7 @@ let p = main.querySelector("p");
 //p.innerHTML = "Hopefully this works!?";
 
 let ul = document.createElement("ul");
-main.appendChild(ul);
+main.appendChild(ul);}
 
 // weather.forEach(function() {
 //     let li = document.createElement("li");
