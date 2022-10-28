@@ -127,6 +127,7 @@ var fiveDayForecast = function (data) {
     var currentHumidity = data.current.humidity; // this grabs the actual current humidity for the selected city
     var iconImage = weatherImg(data.current.weather[0].icon);
     var test = data.daily.humidity;
+    console.log(weatherImg);
 
     var weatherTitle = document.getElementById("input-container");
     humidityEl = document.getElementById('humidity-container');
