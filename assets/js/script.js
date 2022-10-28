@@ -1,4 +1,4 @@
-//const dayjs = require('dayjs');
+
 // look at 6.3.5: Convert Fetched Data into DOM Elements to grab city data and put it in the html
 var origText = document.querySelector("#city-text");
 var inputForm = document.querySelector("#input-form"); // input form that accepts a city selected by the user
@@ -16,7 +16,7 @@ var cityInputEl = document.querySelector("#city"); // references input form that
 var citySearchHistoryCont = document.querySelector("#search-history");
 
 
-
+//console.log(moment().format());
 // var currentDate = moment().format('L');
 // $("#current-date").text("(" + currentDate + ")");
 
@@ -40,13 +40,13 @@ function renderCitySearchHistory() {
         newCityBtn.setAttribute('data-search', citySearchHistory[i]);
         newCityBtn.textContent = citySearchHistory[i];
         citySearchHistoryCont.appendChild(newCityBtn);
-        newCityBtn.addEventListener("click", citySearchHistory);
+        newCityBtn.addEventListener("click", formSubmitHandler);
+        origText = citySearchHistory
+        // return cityInput;
+        //return citySearchHistory[i];
     }
 
-
 }
-
-
 
 function formSubmitHandler(event) {
     event.preventDefault();
@@ -59,6 +59,7 @@ function formSubmitHandler(event) {
         origText.innerHTML = cityInputEl.value; // this adds the city to the rendered weather data
         citySearchHistory.push(cityInputEl.value);
         localStorage.setItem('city', JSON.stringify(citySearchHistory));
+        
         renderCitySearchHistory();
         // only add city button if city is not there already
         // if (city.indexOf(citySearchHistory) !== -1) {
@@ -108,7 +109,7 @@ function weatherImg(weatherImage) {
     var iconUrl = `https://openweathermap.org/img/wn/${weatherImage}@2x.png`;
     return iconUrl;
 }
-//console.log(weatherImage);
+
 
 
 var fiveDayForecast = function (data) {
@@ -124,6 +125,7 @@ var fiveDayForecast = function (data) {
     var currentTemp = data.current.temp; // this grabs the actual current temp for the selected city
     var currentWind = data.current.wind_speed; // this grabs the actual current wind speed for the selected city
     var currentHumidity = data.current.humidity; // this grabs the actual current humidity for the selected city
+    var iconImage = weatherImg(data.current.weather[0].icon);
     var test = data.daily.humidity;
 
     var weatherTitle = document.getElementById("input-container");
@@ -137,15 +139,14 @@ var fiveDayForecast = function (data) {
 
     // currentHumidityEl.textContent = "Humidity: " + currentHumidity + "%";
 
-    var iconImage = weatherImg(data.current.weather[0].icon);
     //var iconUrl = `https://openweathermap.org/img/w/${data.daily[0].icon}.png`;
 
     //http://openweathermap.org/img/wn/10d@2x.png
     //var dailyIcon = daily.weather[0].description || daily[0].main;
 
 
-    //var futureForecastString =  moment(data.current.weather[i].dt_txt).format("L")
-    //console.log(futureForecastString);
+    // var futureForecastString =  moment(data.current.weather[i].dt_txt).format("L")
+    // console.log(futureForecastString);
 
     console.log(currentTemp);
     console.log(currentWind);
@@ -159,26 +160,32 @@ var fiveDayForecast = function (data) {
         var dailyTemp = data.daily[i].temp.day; // this grabs the actual current temp for the selected city
         var dailyWind = data.daily[i].wind_speed; // this grabs the actual current wind speed for the selected city
         var dailyHumidity = data.daily[i].humidity; // this grabs the actual current humidity for the selected city
+        var dailyIcon = data.daily[i].weather.icon;
+        
         //weatherIcon = data.current.weather[i].icon;
         
         
 
         var weatherTitle = document.getElementById("temperature-container-" + i);
+
         humidityEl = document.getElementById("humidity-container-" + i);
         windEl = document.getElementById("wind-container-" + i);
-        //iconUrl = document.getElementById("icon-container-" + i);
-        //weatherIcon = document.getElementById("icon-container-" + i);
-        var weatherIcon = document.createElement('img'); // 'img' is 
-        weatherIcon.setAttribute('src', iconImage);
+        iconUrl = document.getElementById("img-" + i);
+        //var weatherIcon = document.createElement('icon-container-' + i); // 'img' is 
+        weatherIcon = document.getElementById("icon-container-" + i);
+        
+        
+        weatherTitle.appendChild(weatherIcon); // this attaches the weather icon to the html page
         console.log(weatherIcon);
-        humidityContainerEl.appendChild(weatherIcon); // this attaches the weather icon to the html page
+
 
         // this is what renders the current weather data in the html page
         weatherTitle.textContent = `Temperature: ${dailyTemp}`;
         windEl.textContent = `Wind Speed: ${dailyWind}`;
         humidityEl.textContent = `Humidity: ${dailyHumidity}` + '%';
-        //iconEl.setAttribute('src', {icon});
-
+        //iconUrl = `Icon: ${img}` + '%';
+      
+        
 
         //     var fiveDayEl = document.createElement("a");
         //     fiveDayEl.classList = "list-item flex-row justify-space-between align-center";
