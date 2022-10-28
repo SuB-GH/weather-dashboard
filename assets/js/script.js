@@ -25,9 +25,10 @@ var apiKey = "3e89c17611e41ba25f1b674bd5f9012d";
 var currentForecast;
 var citySearchHistory = JSON.parse(localStorage.getItem("city")) || [];
 
+
 function renderCitySearchHistory() {
     citySearchHistoryCont.innerHTML = '';
-
+    
     // this creates the city search history buttons and renders them to the html page
     for (var i = citySearchHistory.length - 1; i >= 0; i--) {
         var btn = document.createElement('button');
@@ -38,8 +39,13 @@ function renderCitySearchHistory() {
         btn.setAttribute('data-search', citySearchHistory[i]);
         btn.textContent = citySearchHistory[i];
         citySearchHistoryCont.appendChild(btn);
+        btn.addEventListener("click", renderCitySearchHistory);
     }
+
+
 }
+
+
 
 function formSubmitHandler(event) {
     event.preventDefault();
@@ -152,14 +158,16 @@ var fiveDayForecast = function (data) {
         var dailyTemp = data.daily[i].temp.day; // this grabs the actual current temp for the selected city
         var dailyWind = data.daily[i].wind_speed; // this grabs the actual current wind speed for the selected city
         var dailyHumidity = data.daily[i].humidity; // this grabs the actual current humidity for the selected city
-        //var iconUrl = data.current.weather[i].icon;
+        //weatherIcon = data.current.weather[i].icon;
+        
+        
 
         var weatherTitle = document.getElementById("temperature-container-" + i);
         humidityEl = document.getElementById("humidity-container-" + i);
         windEl = document.getElementById("wind-container-" + i);
         //iconUrl = document.getElementById("icon-container-" + i);
-        weatherIcon = document.getElementById("icon-container-" + i);
-        var weatherIcon = document.createElement('img');
+        //weatherIcon = document.getElementById("icon-container-" + i);
+        var weatherIcon = document.createElement('img'); // 'img' is 
         weatherIcon.setAttribute('src', iconImage);
         console.log(weatherIcon);
         humidityContainerEl.appendChild(weatherIcon); // this attaches the weather icon to the html page
