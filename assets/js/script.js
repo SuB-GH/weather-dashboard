@@ -28,18 +28,19 @@ var citySearchHistory = JSON.parse(localStorage.getItem("city")) || [];
 
 function renderCitySearchHistory() {
     citySearchHistoryCont.innerHTML = '';
+
+    // $(`#citySearchHistoryCont`).empty();
     
     // this creates the city search history buttons and renders them to the html page
     for (var i = citySearchHistory.length - 1; i >= 0; i--) {
-        var btn = document.createElement('button');
-        btn.setAttribute('type', 'button');
-        btn.setAttribute('aria-controls', 'current forecast');
-        btn.classList.add('history-btn', 'btn-history');
-
-        btn.setAttribute('data-search', citySearchHistory[i]);
-        btn.textContent = citySearchHistory[i];
-        citySearchHistoryCont.appendChild(btn);
-        btn.addEventListener("click", renderCitySearchHistory);
+        var newCityBtn = document.createElement('button');
+        newCityBtn.setAttribute('type', 'button');
+        // newCityBtn.setAttribute('aria-controls', 'current forecast');
+        // newCityBtn.classList.add('history-btn', 'btn-history');
+        newCityBtn.setAttribute('data-search', citySearchHistory[i]);
+        newCityBtn.textContent = citySearchHistory[i];
+        citySearchHistoryCont.appendChild(newCityBtn);
+        newCityBtn.addEventListener("click", citySearchHistory);
     }
 
 
