@@ -30,7 +30,7 @@ function renderCitySearchHistory() {
     citySearchHistoryCont.innerHTML = '';
 
     // $(`#citySearchHistoryCont`).empty();
-    
+
     // this creates the city search history buttons and renders them to the html page
     for (var i = citySearchHistory.length - 1; i >= 0; i--) {
         var newCityBtn = document.createElement('button');
@@ -59,7 +59,7 @@ function formSubmitHandler(event) {
         origText.innerHTML = cityInputEl.value; // this adds the city to the rendered weather data
         citySearchHistory.push(cityInputEl.value);
         localStorage.setItem('city', JSON.stringify(citySearchHistory));
-        
+
         renderCitySearchHistory();
         // only add city button if city is not there already
         // if (city.indexOf(citySearchHistory) !== -1) {
@@ -107,9 +107,10 @@ var getForecastData = function (lat, lon) {
 
 function weatherImg(weatherImage) {
     var iconUrl = `https://openweathermap.org/img/wn/${weatherImage}@2x.png`;
+    // var testWeatherIcon = document.createElement('img');
+    // testWeatherIcon.setAttribute('src', iconUrl);
     return iconUrl;
 }
-
 
 
 var fiveDayForecast = function (data) {
@@ -125,18 +126,22 @@ var fiveDayForecast = function (data) {
     var currentTemp = data.current.temp; // this grabs the actual current temp for the selected city
     var currentWind = data.current.wind_speed; // this grabs the actual current wind speed for the selected city
     var currentHumidity = data.current.humidity; // this grabs the actual current humidity for the selected city
-    var iconImage = weatherImg(data.current.weather[0].icon);
-    var test = data.daily.humidity;
-    console.log(weatherImg);
+    console.log(data.current);
+    var currentIcon = weatherImg(data.current.weather[0].icon);
+    //var test = data.daily.humidity;
+    //console.log(weatherImg);
+    //console.log(iconImage); // "iconImage" is the actual icon for the current weather
+
 
     var weatherTitle = document.getElementById("input-container");
     humidityEl = document.getElementById('humidity-container');
     windEl = document.getElementById('wind-container');
-
+    iconEl = document.getElementById("icon-container");
     // this is what renders the current weather data in the html page
     weatherTitle.textContent = `Temperature: ${currentTemp}`;
     windEl.textContent = `Wind Speed: ${currentWind}`;
     humidityEl.textContent = `Humidity: ${currentHumidity}` + '%';
+    iconEl.src = currentIcon
 
     // currentHumidityEl.textContent = "Humidity: " + currentHumidity + "%";
 
@@ -153,7 +158,8 @@ var fiveDayForecast = function (data) {
     console.log(currentWind);
     console.log(currentHumidity);
 
-    // weatherIcon.setAttribute('src', iconUrl);
+    //weatherIcon.setAttribute('src', iconUrl);
+
     //  weatherIcon.setAttribute('alt', iconDescription);
 
     for (var i = 0; i < 5; i++) {
@@ -161,32 +167,35 @@ var fiveDayForecast = function (data) {
         var dailyTemp = data.daily[i].temp.day; // this grabs the actual current temp for the selected city
         var dailyWind = data.daily[i].wind_speed; // this grabs the actual current wind speed for the selected city
         var dailyHumidity = data.daily[i].humidity; // this grabs the actual current humidity for the selected city
-        var dailyIcon = data.daily[i].weather.icon;
-        
-        //weatherIcon = data.current.weather[i].icon;
-        
-        
+        // var dailyIcon = data.daily[i].weather.icon;
+        var iconImage = weatherImg(data.daily[i].weather[0].icon);
+
+        //dailyIcon = data.current[i].weather.icon;
+        console.log(iconImage);
+
 
         var weatherTitle = document.getElementById("temperature-container-" + i);
 
         humidityEl = document.getElementById("humidity-container-" + i);
         windEl = document.getElementById("wind-container-" + i);
         iconUrl = document.getElementById("img-" + i);
-        //var weatherIcon = document.createElement('icon-container-' + i); // 'img' is 
-        weatherIcon = document.getElementById("icon-container-" + i);
-        
-        
-        weatherTitle.appendChild(weatherIcon); // this attaches the weather icon to the html page
-        console.log(weatherIcon);
+        weatherIcon = document.getElementById('icon-container-' + i); // 'img' is 
+        //weatherIcon = document.getElementById(`{weatherImage}` + i);
+
+
+        //humidityEl.appendChild(iconImage); // this attaches the weather icon to the html page
+        // console.log(weatherIcon);
 
 
         // this is what renders the current weather data in the html page
         weatherTitle.textContent = `Temperature: ${dailyTemp}`;
         windEl.textContent = `Wind Speed: ${dailyWind}`;
         humidityEl.textContent = `Humidity: ${dailyHumidity}` + '%';
+        //console.log(weatherIcon);
+        weatherIcon.src = iconImage
         //iconUrl = `Icon: ${img}` + '%';
-      
-        
+
+
 
         //     var fiveDayEl = document.createElement("a");
         //     fiveDayEl.classList = "list-item flex-row justify-space-between align-center";
